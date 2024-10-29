@@ -58,6 +58,8 @@ public static class GitHubWebhook
 
                 if (parse.ContainsKey("comment") && parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestCommentCreated; }
 
+                if (parse.ContainsKey("comment") && parse.ContainsKey("discussion")) { return GitHubEvents.DiscussionCommentCreated; }
+
                 if (parse.ContainsKey("starred_at")) { return GitHubEvents.StarredAtCreated; }
 
                 if (parse.ContainsKey("discussion")) { return GitHubEvents.DiscussionCreated; }
