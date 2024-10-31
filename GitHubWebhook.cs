@@ -4,6 +4,7 @@ namespace Noware.GitHub.Webhooks.Models;
 
 public static class GitHubWebhook
 {
+    // TODO: support GitHub HTTP header for more precision
     public static GitHubEvents GetEventType(string json)
     {
         Dictionary<string, JsonElement>? parse = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
@@ -31,6 +32,10 @@ public static class GitHubWebhook
                 if (parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestAutoMergeEnabled; }
 
                 break;
+            case "auto_merge_disabled":
+                if (parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestAutoMergeDisabled; }
+
+                break;
             case "checks_requested":
                 if (parse.ContainsKey("merge_group")) { return GitHubEvents.MergeGroupChecksRequested; }
 
@@ -54,11 +59,11 @@ public static class GitHubWebhook
 
                 break;
             case "created":
-                if (parse.ContainsKey("comment") && parse.ContainsKey("issue")) { return GitHubEvents.IssueCommentCreated; }
+                if (parse.ContainsKey("issue") && parse.ContainsKey("comment")) { return GitHubEvents.IssueCommentCreated; }
 
-                if (parse.ContainsKey("comment") && parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestCommentCreated; }
+                if (parse.ContainsKey("pull_request") && parse.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentCreated; }
 
-                if (parse.ContainsKey("comment") && parse.ContainsKey("discussion")) { return GitHubEvents.DiscussionCommentCreated; }
+                if (parse.ContainsKey("discussion") && parse.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentCreated; }
 
                 if (parse.ContainsKey("starred_at")) { return GitHubEvents.StarredAtCreated; }
 
@@ -72,6 +77,12 @@ public static class GitHubWebhook
 
                 break;
             case "deleted":
+                if (parse.ContainsKey("issue") && parse.ContainsKey("comment")) { return GitHubEvents.IssueCommentDeleted; }
+
+                if (parse.ContainsKey("pull_request") && parse.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentDeleted; }
+
+                if (parse.ContainsKey("discussion") && parse.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentDeleted; }
+
                 if (parse.ContainsKey("starred_at")) { return GitHubEvents.StarredAtDeleted; }
 
                 break;
@@ -84,9 +95,11 @@ public static class GitHubWebhook
 
                 break;
             case "edited":
-                if (parse.ContainsKey("comment") && parse.ContainsKey("issue")) { return GitHubEvents.IssueCommentEdited; }
+                if (parse.ContainsKey("issue") && parse.ContainsKey("comment")) { return GitHubEvents.IssueCommentEdited; }
 
-                if (parse.ContainsKey("comment") && parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestCommentEdited; }
+                if (parse.ContainsKey("pull_request") && parse.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentEdited; }
+
+                if (parse.ContainsKey("discussion") && parse.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentEdited; }
 
                 if (parse.ContainsKey("discussion")) { return GitHubEvents.DiscussionEdited; }
 
@@ -169,6 +182,10 @@ public static class GitHubWebhook
                 break;
             case "synchronize":
                 if (parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestSynchronize; }
+
+                break;
+            case "typed":
+                if (parse.ContainsKey("issue")) { return GitHubEvents.IssueTyped; }
 
                 break;
             case "unassigned":
