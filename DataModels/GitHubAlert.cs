@@ -22,10 +22,13 @@ public class GitHubAlert
     [JsonPropertyName("ghsa_id")] public string GhsaId { get; set; } = string.Empty;
     [JsonPropertyName("html_url")] public string HtmlUrl { get; set; } = string.Empty; // can be empty
     [JsonPropertyName("id")] public long? Id { get; set; } // can be null
+    [JsonPropertyName("most_recent_instance")] public object? MostRecentInstance { get; set; }
     [JsonPropertyName("number")] public long Number { get; set; }
+    [JsonPropertyName("rule")] public object? Rule { get; set; }
     [JsonPropertyName("security_advisory")] public object? SecurityAdvisory { get; set; }
     [JsonPropertyName("security_vulnerability")] public object? SecurityVulnerability { get; set; }
     [JsonPropertyName("severity")] public string Severity { get; set; } = string.Empty; // e.g. "moderate"
     [JsonPropertyName("state")] public string State { get; set; } = string.Empty; // e.g. "fixed"
+    [JsonPropertyName("tool")] public object? Tool { get; set; }
     [JsonPropertyName("updated_at")] public DateTimeOffset? UpdatedAt { get; set; }
 }

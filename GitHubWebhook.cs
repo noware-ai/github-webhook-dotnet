@@ -107,6 +107,8 @@ public static class GitHubWebhook
 
                 if (parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestEdited; }
 
+                if (parse.ContainsKey("release")) { return GitHubEvents.ReleaseEdited; }
+
                 if (parse.ContainsKey("member") && parse.ContainsKey("changes")) { return GitHubEvents.RepoSettingsEdited; }
 
                 break;
@@ -136,6 +138,14 @@ public static class GitHubWebhook
                 if (parse.ContainsKey("pull_request")) { return GitHubEvents.PullRequestOpened; }
 
                 break;
+            case "sub_issue_added":
+                if (parse.ContainsKey("sub_issue")) { return GitHubEvents.SubIssueAdded; }
+
+                break;
+            case "parent_issue_added":
+                if (parse.ContainsKey("parent_issue")) { return GitHubEvents.ParentIssueAdded; }
+
+                break;
             case "published":
                 if (parse.ContainsKey("registry_package")) { return GitHubEvents.RegistryPackagePublished; }
 
@@ -155,6 +165,9 @@ public static class GitHubWebhook
             case "released":
                 if (parse.ContainsKey("release")) { return GitHubEvents.ReleaseReleased; }
 
+                break;
+            case "reopened":
+                if (parse.ContainsKey("alert")) { return GitHubEvents.AlertReopened; }
                 break;
             case "requested":
                 if (parse.ContainsKey("workflow_run")) { return GitHubEvents.WorkflowRunRequested; }

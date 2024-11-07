@@ -24,6 +24,9 @@ public enum GitHubEvents
     IssueUnassigned,
     IssueUnlabeled,
 
+    ParentIssueAdded,
+    SubIssueAdded,
+
     PullRequestAssigned,
     PullRequestAutoMergeDisabled,
     PullRequestAutoMergeEnabled,
@@ -52,10 +55,12 @@ public enum GitHubEvents
     PackagePublished,
 
     ReleaseCreated,
+    ReleaseEdited,
     ReleasePublished,
     ReleaseReleased,
 
     AlertFixed,
+    AlertReopened,
     AlertResolve,
 
     StarredAtCreated,

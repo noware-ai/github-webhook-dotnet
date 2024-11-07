@@ -15,6 +15,7 @@ public class GitHubWebhookPayload
     [JsonPropertyName("check_run")] public GitHubCheckRun? CheckRun { get; set; } = null;
     [JsonPropertyName("check_suite")] public GitHubCheckSuite? CheckSuite { get; set; } = null;
     [JsonPropertyName("comment")] public GitHubComment? Comment { get; set; } = null;
+    [JsonPropertyName("commit_oid")] public string? CommitOid { get; set; } = null;
     [JsonPropertyName("commits")] public GitHubCommit[]? Commits { get; set; } = null;
     [JsonPropertyName("compare")] public string? Compare { get; set; } = null;
     [JsonPropertyName("created")] public bool? Created { get; set; } = null;
@@ -28,6 +29,9 @@ public class GitHubWebhookPayload
     [JsonPropertyName("merge_group")] public GitHubMergeGroup? MergeGroup { get; set; } = null;
     [JsonPropertyName("number")] public long Number { get; set; }
     [JsonPropertyName("organization")] public GitHubOrganization? Organization { get; set; } = null;
+    [JsonPropertyName("parent_issue")] public GitHubIssue? ParentIssue { get; set; } = null;
+    [JsonPropertyName("parent_issue_id")] public long ParentIssueId { get; set; }
+    [JsonPropertyName("parent_issue_repo")] public GitHubRepository? ParentIssueRepo { get; set; } = null;
     [JsonPropertyName("pull_request")] public GitHubPullRequest? PullRequest { get; set; } = null;
     [JsonPropertyName("pusher")] public GitUser? Pusher { get; set; } = null;
     [JsonPropertyName("pusher_type")] public string? PusherType { get; set; } = null;
@@ -38,6 +42,8 @@ public class GitHubWebhookPayload
     [JsonPropertyName("repository")] public GitHubRepository? Repository { get; set; } = null;
     [JsonPropertyName("sender")] public GitHubUser? Sender { get; set; } = null;
     [JsonPropertyName("starred_at")] public DateTimeOffset? StarredAt { get; set; } = null;
+    [JsonPropertyName("sub_issue")] public GitHubIssue? SubIssue { get; set; } = null;
+    [JsonPropertyName("sub_issue_id")] public long SubIssueId { get; set; }
     [JsonPropertyName("thread")] public GitHubThread? Thread { get; set; } = null;
     [JsonPropertyName("type")] public GitHubType? Type { get; set; } = null;
     [JsonPropertyName("workflow")] public GitHubWorkflow? Workflow { get; set; } = null;
