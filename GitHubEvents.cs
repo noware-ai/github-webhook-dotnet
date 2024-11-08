@@ -69,6 +69,8 @@ public enum GitHubEvents
     LooksLikeANewFork,
 
     RepoSettingsEdited,
+    LooksLikeAWebhookAction,
+    WebhookPing,
 
     CheckSuiteCompleted,
 

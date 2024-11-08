@@ -28,6 +28,7 @@ public class GitHubWebhookPayload
     [JsonPropertyName("member")] public GitHubUser? Member { get; set; } = null;
     [JsonPropertyName("merge_group")] public GitHubMergeGroup? MergeGroup { get; set; } = null;
     [JsonPropertyName("number")] public long Number { get; set; }
+    [JsonPropertyName("hook_id")] public long HookId { get; set; }
     [JsonPropertyName("organization")] public GitHubOrganization? Organization { get; set; } = null;
     [JsonPropertyName("parent_issue")] public GitHubIssue? ParentIssue { get; set; } = null;
     [JsonPropertyName("parent_issue_id")] public long ParentIssueId { get; set; }
@@ -49,4 +50,6 @@ public class GitHubWebhookPayload
     [JsonPropertyName("workflow")] public GitHubWorkflow? Workflow { get; set; } = null;
     [JsonPropertyName("workflow_job")] public GitHubWorkflowJob? WorkflowJob { get; set; } = null;
     [JsonPropertyName("workflow_run")] public GitHubWorkflowRun? WorkflowRun { get; set; } = null;
+    [JsonPropertyName("zen")] public string? Zen { get; set; }
+    [JsonPropertyName("hook")] public GitHubHook? Hook { get; set; }
 }

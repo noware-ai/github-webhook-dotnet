@@ -2,9 +2,8 @@ using System.Text.Json;
 
 namespace Noware.GitHub.Webhooks.Models;
 
-public static class GitHubWebhook
+public static partial class GitHubWebhook
 {
-    // TODO: support GitHub HTTP header for more precision
     public static GitHubEvents GetEventType(string json)
     {
         Dictionary<string, JsonElement>? parse = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
@@ -15,6 +14,7 @@ public static class GitHubWebhook
         {
             action = jaction.GetString();
         }
+
 
         switch (action)
         {
@@ -216,6 +216,13 @@ public static class GitHubWebhook
 
                 break;
             default:
+                if (parse.ContainsKey("zen")
+                    && parse.ContainsKey("hook_id")
+                    && parse.ContainsKey("hook"))
+                {
+                    return GitHubEvents.LooksLikeAWebhookAction;
+                }
+
                 if (parse.ContainsKey("ref")
                     && parse.ContainsKey("before")
                     && parse.ContainsKey("after")
