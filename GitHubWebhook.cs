@@ -80,18 +80,45 @@ public static class GitHubWebhook
                     case "reopened": return GitHubEvents.CodeScanningAlertReopened;
                     case "resolve": return GitHubEvents.CodeScanningAlertResolve;
                 }
+
+                break;
+            case "discussion":
+                switch (action)
+                {
+                    case "answered": return GitHubEvents.DiscussionAnswered;
+                    case "closed": return GitHubEvents.DiscussionClosed;
+                    case "created": return GitHubEvents.DiscussionCreated;
+                    case "edited": return GitHubEvents.DiscussionEdited;
+                    case "labeled": return GitHubEvents.DiscussionLabeled;
+                }
+
+                break;
+            case "discussion_comment":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.DiscussionCommentCreated;
+                    case "deleted": return GitHubEvents.DiscussionCommentDeleted;
+                    case "edited": return GitHubEvents.DiscussionCommentEdited;
+                }
+
                 break;
             case "package":
                 switch (action)
                 {
                     case "published": return GitHubEvents.PackagePublished;
                 }
+
+                break;
+            case "ping":
+                if (action == null && payload.ContainsKey("hook")) { return GitHubEvents.WebhookPing; }
+
                 break;
             case "registry_package":
                 switch (action)
                 {
                     case "published": return GitHubEvents.RegistryPackagePublished;
                 }
+
                 break;
             case "star":
                 switch (action)
@@ -99,9 +126,15 @@ public static class GitHubWebhook
                     case "created": return GitHubEvents.StarredAtCreated;
                     case "deleted": return GitHubEvents.StarredAtDeleted;
                 }
+
                 break;
-            case "ping":
-                if (action == null && payload.ContainsKey("hook")) { return GitHubEvents.WebhookPing; }
+            case "issue_comment":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.IssueCommentCreated;
+                    case "deleted": return GitHubEvents.IssueCommentDeleted;
+                    case "edited": return GitHubEvents.IssueCommentEdited;
+                }
 
                 break;
             case "issues":
@@ -138,169 +171,52 @@ public static class GitHubWebhook
                     case "synchronize": return GitHubEvents.PullRequestSynchronize;
                     case "unlabeled": return GitHubEvents.PullRequestUnlabeled;
                 }
+
                 break;
             case "pull_request_review":
                 switch (action)
                 {
                     case "submitted": return GitHubEvents.PullRequestReviewSubmitted;
                 }
+
+                break;
+            case "pull_request_review_comment":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.PullRequestCommentCreated;
+                    case "deleted": return GitHubEvents.PullRequestCommentDeleted;
+                    case "edited": return GitHubEvents.PullRequestCommentEdited;
+                }
+
                 break;
             case "pull_request_review_thread":
                 switch (action)
                 {
                     case "resolved": return GitHubEvents.PullRequestThreadResolved;
                 }
+
+                break;
+            case "release":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.ReleaseCreated;
+                    case "edited": return GitHubEvents.ReleaseEdited;
+                    case "published": return GitHubEvents.ReleasePublished;
+                    case "released": return GitHubEvents.ReleaseReleased;
+                }
+
+                break;
+            case "sub_issues":
+                switch (action)
+                {
+                    case "parent_issue_added": return GitHubEvents.SubIssuesParentIssueAdded;
+                    case "sub_issue_added": return GitHubEvents.SubIssuesSubIssueAdded;
+                }
+
                 break;
         }
 
         // Fallback to old parsing logic
-        return GetEventTypeLegacy(action, payload, log);
-    }
-
-    private static GitHubEvents GetEventTypeLegacy(string? action, Dictionary<string, JsonElement> payload, ILogger log)
-    {
-        switch (action)
-        {
-            case "answered":
-                if (payload.ContainsKey("discussion")) { return GitHubEvents.DiscussionAnswered; }
-
-                break;
-            case "checks_requested":
-                if (payload.ContainsKey("merge_group")) { return GitHubEvents.MergeGroupChecksRequested; }
-
-                break;
-            case "closed":
-                if (payload.ContainsKey("discussion")) { return GitHubEvents.DiscussionClosed; }
-
-                break;
-            case "completed":
-                if (payload.ContainsKey("check_run")) { return GitHubEvents.CheckRunCompleted; }
-
-                if (payload.ContainsKey("workflow_run")) { return GitHubEvents.WorkflowRunCompleted; }
-
-                if (payload.ContainsKey("check_suite")) { return GitHubEvents.CheckSuiteCompleted; }
-
-                if (payload.ContainsKey("workflow_job")) { return GitHubEvents.WorkflowJobCompleted; }
-
-                break;
-            case "created":
-                if (payload.ContainsKey("issue") && payload.ContainsKey("comment")) { return GitHubEvents.IssueCommentCreated; }
-
-                if (payload.ContainsKey("pull_request") && payload.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentCreated; }
-
-                if (payload.ContainsKey("discussion") && payload.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentCreated; }
-
-                if (payload.ContainsKey("discussion")) { return GitHubEvents.DiscussionCreated; }
-
-                if (payload.ContainsKey("release")) { return GitHubEvents.ReleaseCreated; }
-
-                if (payload.ContainsKey("check_run")) { return GitHubEvents.CheckRunCreated; }
-
-                if (payload.ContainsKey("workflow_run")) { return GitHubEvents.WorkflowRunCreated; }
-
-                break;
-            case "deleted":
-                if (payload.ContainsKey("issue") && payload.ContainsKey("comment")) { return GitHubEvents.IssueCommentDeleted; }
-
-                if (payload.ContainsKey("pull_request") && payload.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentDeleted; }
-
-                if (payload.ContainsKey("discussion") && payload.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentDeleted; }
-
-                break;
-            case "destroyed":
-                if (payload.ContainsKey("merge_group")) { return GitHubEvents.MergeGroupDestroyed; }
-
-                break;
-            case "edited":
-                if (payload.ContainsKey("issue") && payload.ContainsKey("comment")) { return GitHubEvents.IssueCommentEdited; }
-
-                if (payload.ContainsKey("pull_request") && payload.ContainsKey("comment")) { return GitHubEvents.PullRequestCommentEdited; }
-
-                if (payload.ContainsKey("discussion") && payload.ContainsKey("comment")) { return GitHubEvents.DiscussionCommentEdited; }
-
-                if (payload.ContainsKey("discussion")) { return GitHubEvents.DiscussionEdited; }
-
-                if (payload.ContainsKey("release")) { return GitHubEvents.ReleaseEdited; }
-
-                if (payload.ContainsKey("member") && payload.ContainsKey("changes")) { return GitHubEvents.RepoSettingsEdited; }
-
-                break;
-            case "in_progress":
-                if (payload.ContainsKey("workflow_run")) { return GitHubEvents.WorkflowRunInProgress; }
-
-                if (payload.ContainsKey("workflow_job")) { return GitHubEvents.WorkflowJobInProgress; }
-
-                break;
-            case "sub_issue_added":
-                if (payload.ContainsKey("sub_issue")) { return GitHubEvents.SubIssueAdded; }
-
-                break;
-            case "parent_issue_added":
-                if (payload.ContainsKey("parent_issue")) { return GitHubEvents.ParentIssueAdded; }
-
-                break;
-            case "published":
-                if (payload.ContainsKey("release")) { return GitHubEvents.ReleasePublished; }
-
-                break;
-            case "queued":
-                if (payload.ContainsKey("workflow_job")) { return GitHubEvents.WorkflowJobQueued; }
-
-                break;
-            case "released":
-                if (payload.ContainsKey("release")) { return GitHubEvents.ReleaseReleased; }
-
-                break;
-            case "requested":
-                if (payload.ContainsKey("workflow_run")) { return GitHubEvents.WorkflowRunRequested; }
-
-                break;
-            case "started":
-                if (payload.ContainsKey("sender")) { return GitHubEvents.LooksLikeRepoWatchCreated; }
-
-                break;
-            case "waiting":
-                if (payload.ContainsKey("workflow_job")) { return GitHubEvents.WorkflowJobWaiting; }
-
-                break;
-            default:
-                // if (payload.ContainsKey("zen")
-                //     && payload.ContainsKey("hook_id")
-                //     && payload.ContainsKey("hook"))
-                // {
-                //     return GitHubEvents.LooksLikeAWebhookAction;
-                // }
-
-                if (payload.ContainsKey("ref")
-                    && payload.ContainsKey("before")
-                    && payload.ContainsKey("after")
-                    && payload.ContainsKey("compare")
-                    && payload.ContainsKey("pusher")
-                    && payload.ContainsKey("sender")
-                    && payload.ContainsKey("created")
-                    && payload.ContainsKey("deleted")
-                    && payload.ContainsKey("forced")
-                   )
-                {
-                    return GitHubEvents.LooksLikeABranchPush;
-                }
-
-                if (payload.ContainsKey("ref")
-                    && payload.ContainsKey("ref_type")
-                    && payload.ContainsKey("sender")
-                   )
-                {
-                    return GitHubEvents.LooksLikeAMergeFromQueue;
-                }
-
-                if (payload.ContainsKey("forkee"))
-                {
-                    return GitHubEvents.LooksLikeANewFork;
-                }
-
-                return GitHubEvents.Unknown;
-        }
-
-        return GitHubEvents.Unknown;
+        return GitHubWebhookLegacy.GetEventType(action, payload, log);
     }
 }

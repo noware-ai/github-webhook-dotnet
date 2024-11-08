@@ -6,11 +6,13 @@ public enum GitHubEvents
 
     DiscussionAnswered,
     DiscussionClosed,
+    DiscussionCreated,
+    DiscussionEdited,
+    DiscussionLabeled,
+
     DiscussionCommentCreated,
     DiscussionCommentDeleted,
     DiscussionCommentEdited,
-    DiscussionCreated,
-    DiscussionEdited,
 
     IssueAssigned,
     IssueClosed,
@@ -25,8 +27,8 @@ public enum GitHubEvents
     IssueUnassigned,
     IssueUnlabeled,
 
-    ParentIssueAdded,
-    SubIssueAdded,
+    SubIssuesParentIssueAdded,
+    SubIssuesSubIssueAdded,
 
     PullRequestAssigned,
     PullRequestAutoMergeDisabled,
