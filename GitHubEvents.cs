@@ -47,6 +47,10 @@ public enum GitHubEvents
     PullRequestSynchronize,
     PullRequestUnlabeled,
 
+    PullRequestThreadResolved,
+
+    PullRequestReviewSubmitted,
+
     MergeGroupChecksRequested,
     MergeGroupDestroyed,
     LooksLikeAMergeFromQueue,
@@ -60,9 +64,9 @@ public enum GitHubEvents
     ReleasePublished,
     ReleaseReleased,
 
-    AlertFixed,
-    AlertReopened,
-    AlertResolve,
+    CodeScanningAlertFixed,
+    CodeScanningAlertResolve,
+    CodeScanningAlertReopened,
 
     StarredAtCreated,
     StarredAtDeleted,

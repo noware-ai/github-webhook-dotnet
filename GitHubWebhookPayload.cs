@@ -41,6 +41,7 @@ public class GitHubWebhookPayload
     [JsonPropertyName("ref_type")] public string? RefType { get; set; } = null;
     [JsonPropertyName("release")] public GitHubRelease? Release { get; set; } = null;
     [JsonPropertyName("repository")] public GitHubRepository? Repository { get; set; } = null;
+    [JsonPropertyName("review")] public GitHubPullRequestReview? Review { get; set; } = null;
     [JsonPropertyName("sender")] public GitHubUser? Sender { get; set; } = null;
     [JsonPropertyName("starred_at")] public DateTimeOffset? StarredAt { get; set; } = null;
     [JsonPropertyName("sub_issue")] public GitHubIssue? SubIssue { get; set; } = null;
