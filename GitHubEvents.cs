@@ -20,6 +20,7 @@ public enum GitHubEvents
     IssueEdited,
     IssueLabeled,
     IssueOpened,
+    IssueReopened,
     IssueTyped,
     IssueUnassigned,
     IssueUnlabeled,
