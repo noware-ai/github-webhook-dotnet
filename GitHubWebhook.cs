@@ -50,7 +50,10 @@ public static class GitHubWebhook
         switch (eventName)
         {
             case "branch_protection_rule":
-                // TODO
+                switch (action)
+                {
+                    case "created": return GitHubEvents.BranchProtectionRuleCreated;
+                }
                 break;
             case "check_run":
                 switch (action)
@@ -72,8 +75,12 @@ public static class GitHubWebhook
             case "code_scanning_alert":
                 switch (action)
                 {
+                    case "appeared_in_branch": return GitHubEvents.CodeScanningAlertAppearedInBranch;
+                    case "closed_by_user": return GitHubEvents.CodeScanningAlertClosedByUser;
+                    case "created": return GitHubEvents.CodeScanningAlertCreated;
                     case "fixed": return GitHubEvents.CodeScanningAlertFixed;
                     case "reopened": return GitHubEvents.CodeScanningAlertReopened;
+                    case "reopened_by_user": return GitHubEvents.CodeScanningAlertReopenedByUser;
                     case "resolve": return GitHubEvents.CodeScanningAlertResolve;
                 }
 
@@ -83,6 +90,19 @@ public static class GitHubWebhook
                 break;
             case "delete":
                 // TODO
+                break;
+            case "dependabot_alert":
+                switch (action)
+                {
+                    case "auto_dismissed": return GitHubEvents.DependabotAlertAutoDismissed;
+                    case "auto_reopened": return GitHubEvents.DependabotAlertAutoReopened;
+                    case "created": return GitHubEvents.DependabotAlertCreated;
+                    case "dismissed": return GitHubEvents.DependabotAlertDismissed;
+                    case "fixed": return GitHubEvents.DependabotAlertFixed;
+                    case "reintroduced": return GitHubEvents.DependabotAlertReintroduced;
+                    case "reopened": return GitHubEvents.DependabotAlertReopened;
+                }
+
                 break;
             case "deployment":
                 // TODO
@@ -123,6 +143,15 @@ public static class GitHubWebhook
                 return GitHubEvents.RepositoryForkEvent;
 
             case "gollum":
+                // TODO
+                break;
+            case "installation":
+                // TODO
+                break;
+            case "installation_repositories":
+                // TODO
+                break;
+            case "installation_target":
                 // TODO
                 break;
             case "issue_comment":
@@ -166,6 +195,9 @@ public static class GitHubWebhook
                 }
 
                 break;
+            case "marketplace_purchase":
+                // TODO
+                break;
             case "merge_group":
                 switch (action)
                 {
@@ -173,6 +205,9 @@ public static class GitHubWebhook
                     case "destroyed": return GitHubEvents.MergeGroupDestroyed;
                 }
 
+                break;
+            case "meta":
+                // TODO
                 break;
             case "milesone":
                 switch (action)
@@ -189,6 +224,7 @@ public static class GitHubWebhook
                 switch (action)
                 {
                     case "published": return GitHubEvents.PackagePublished;
+                    case "updated": return GitHubEvents.PackageUpdated;
                 }
 
                 break;
@@ -196,12 +232,9 @@ public static class GitHubWebhook
                 // TODO
                 break;
             case "ping":
-                if (action == null && payload.ContainsKey("hook")) { return GitHubEvents.WebhookPing; }
-
-                break;
+                return GitHubEvents.WebhookPingEvent;
             case "public":
-                // TODO
-                break;
+                return GitHubEvents.RepositoryVisibilityChangedToPublic;
             case "pull_request":
                 switch (action)
                 {

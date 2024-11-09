@@ -4,6 +4,31 @@ public enum GitHubEvents
 {
     Unknown = -1,
 
+    BranchProtectionRuleCreated,
+
+    CheckRunCompleted,
+    CheckRunCreated,
+    CheckRunRequestedAction,
+    CheckRunRerequested,
+
+    CheckSuiteCompleted,
+
+    CodeScanningAlertAppearedInBranch,
+    CodeScanningAlertClosedByUser,
+    CodeScanningAlertCreated,
+    CodeScanningAlertFixed,
+    CodeScanningAlertReopened,
+    CodeScanningAlertReopenedByUser,
+    CodeScanningAlertResolve,
+
+    DependabotAlertAutoDismissed,
+    DependabotAlertAutoReopened,
+    DependabotAlertCreated,
+    DependabotAlertDismissed,
+    DependabotAlertFixed,
+    DependabotAlertReintroduced,
+    DependabotAlertReopened,
+
     DiscussionCategoryChanged,
     DiscussionAnswered,
     DiscussionClosed,
@@ -49,14 +74,17 @@ public enum GitHubEvents
     LabelDeleted,
     LabelEdited,
 
+    MergeGroupChecksRequested,
+    MergeGroupDestroyed,
+
     MilestoneClosed,
     MilestoneCreated,
     MilestoneDeleted,
     MilestoneEdited,
     MilestoneOpened,
 
-    SubIssuesParentIssueAdded,
-    SubIssuesSubIssueAdded,
+    PackagePublished,
+    PackageUpdated,
 
     PullRequestAssigned,
     PullRequestAutoMergeDisable,
@@ -93,13 +121,8 @@ public enum GitHubEvents
     PullRequestReviewEdited,
     PullRequestReviewSubmitted,
 
-    MergeGroupChecksRequested,
-    MergeGroupDestroyed,
-
     RegistryPackagePublished,
     RegistryPackageUpdated,
-
-    PackagePublished,
 
     ReleaseCreated,
     ReleaseDeleted,
@@ -109,32 +132,24 @@ public enum GitHubEvents
     ReleaseReleased,
     ReleaseUnpublished,
 
-    CodeScanningAlertFixed,
-    CodeScanningAlertResolve,
-    CodeScanningAlertReopened,
-
     StarredAtCreated,
     StarredAtDeleted,
 
+    SubIssuesParentIssueAdded,
+    SubIssuesSubIssueAdded,
+
     WatchStarted,
-
-    WebhookPing,
-
-    CheckSuiteCompleted,
-
-    CheckRunCompleted,
-    CheckRunCreated,
-    CheckRunRequestedAction,
-    CheckRunRerequested,
 
     WorkflowRunCompleted,
     WorkflowRunInProgress,
     WorkflowRunRequested,
 
     // Events without action
-    WorkflowDispatchEvent,
-    WorkflowCallEvent,
     RepositoryForkEvent,
+    RepositoryVisibilityChangedToPublic,
+    WebhookPingEvent,
+    WorkflowCallEvent,
+    WorkflowDispatchEvent,
 
     // WorkflowJobCompleted,
     // WorkflowJobInProgress,
