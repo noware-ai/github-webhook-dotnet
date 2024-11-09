@@ -49,8 +49,34 @@ public static class GitHubWebhook
 
         switch (eventName)
         {
-            case "watch":
+            case "branch_protection_rule":
                 // TODO
+                break;
+            case "check_run":
+                switch (action)
+                {
+                    case "completed": return GitHubEvents.CheckRunCompleted;
+                    case "created": return GitHubEvents.CheckRunCreated;
+                    case "requested_action": return GitHubEvents.CheckRunRequestedAction;
+                    case "rerequested": return GitHubEvents.CheckRunRerequested;
+                }
+
+                break;
+            case "check_suite":
+                switch (action)
+                {
+                    case "completed": return GitHubEvents.CheckSuiteCompleted;
+                }
+
+                break;
+            case "code_scanning_alert":
+                switch (action)
+                {
+                    case "fixed": return GitHubEvents.CodeScanningAlertFixed;
+                    case "reopened": return GitHubEvents.CodeScanningAlertReopened;
+                    case "resolve": return GitHubEvents.CodeScanningAlertResolve;
+                }
+
                 break;
             case "create":
                 // TODO
@@ -64,32 +90,23 @@ public static class GitHubWebhook
             case "deployment_status":
                 // TODO
                 break;
-            case "fork":
-                // TODO
-                break;
-            case "merge_group":
-                // TODO
-                break;
-            case "push":
-                // TODO
-                break;
-            case "code_scanning_alert":
-                switch (action)
-                {
-                    case "fixed": return GitHubEvents.CodeScanningAlertFixed;
-                    case "reopened": return GitHubEvents.CodeScanningAlertReopened;
-                    case "resolve": return GitHubEvents.CodeScanningAlertResolve;
-                }
-
-                break;
             case "discussion":
                 switch (action)
                 {
                     case "answered": return GitHubEvents.DiscussionAnswered;
+                    case "category_changed": return GitHubEvents.DiscussionCategoryChanged;
                     case "closed": return GitHubEvents.DiscussionClosed;
                     case "created": return GitHubEvents.DiscussionCreated;
+                    case "deleted": return GitHubEvents.DiscussionDeleted;
                     case "edited": return GitHubEvents.DiscussionEdited;
                     case "labeled": return GitHubEvents.DiscussionLabeled;
+                    case "locked": return GitHubEvents.DiscussionLocked;
+                    case "pinned": return GitHubEvents.DiscussionPinned;
+                    case "transferred": return GitHubEvents.DiscussionTransferred;
+                    case "unanswered": return GitHubEvents.DiscussionUnanswered;
+                    case "unlabeled": return GitHubEvents.DiscussionUnlabeled;
+                    case "unlocked": return GitHubEvents.DiscussionUnlocked;
+                    case "unpinned": return GitHubEvents.DiscussionUnpinned;
                 }
 
                 break;
@@ -102,31 +119,11 @@ public static class GitHubWebhook
                 }
 
                 break;
-            case "package":
-                switch (action)
-                {
-                    case "published": return GitHubEvents.PackagePublished;
-                }
+            case "fork":
+                return GitHubEvents.RepositoryForkEvent;
 
-                break;
-            case "ping":
-                if (action == null && payload.ContainsKey("hook")) { return GitHubEvents.WebhookPing; }
-
-                break;
-            case "registry_package":
-                switch (action)
-                {
-                    case "published": return GitHubEvents.RegistryPackagePublished;
-                }
-
-                break;
-            case "star":
-                switch (action)
-                {
-                    case "created": return GitHubEvents.StarredAtCreated;
-                    case "deleted": return GitHubEvents.StarredAtDeleted;
-                }
-
+            case "gollum":
+                // TODO
                 break;
             case "issue_comment":
                 switch (action)
@@ -142,40 +139,104 @@ public static class GitHubWebhook
                 {
                     case "assigned": return GitHubEvents.IssueAssigned;
                     case "closed": return GitHubEvents.IssueClosed;
+                    case "deleted": return GitHubEvents.IssueDeleted;
+                    case "demilestoned": return GitHubEvents.IssueDemilestoned;
                     case "edited": return GitHubEvents.IssueEdited;
                     case "labeled": return GitHubEvents.IssueLabeled;
+                    case "locked": return GitHubEvents.IssueLocked;
+                    case "milestoned": return GitHubEvents.IssueMilestoned;
                     case "opened": return GitHubEvents.IssueOpened;
+                    case "pinned": return GitHubEvents.IssuePinned;
                     case "reopened": return GitHubEvents.IssueReopened;
+                    case "transferred": return GitHubEvents.IssueTransferred;
                     case "typed": return GitHubEvents.IssueTyped;
                     case "unassigned": return GitHubEvents.IssueUnassigned;
                     case "unlabeled": return GitHubEvents.IssueUnlabeled;
+                    case "unlocked": return GitHubEvents.IssueUnlocked;
+                    case "unpinned": return GitHubEvents.IssueUnpinned;
                 }
 
+                break;
+            case "label":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.LabelCreated;
+                    case "deleted": return GitHubEvents.LabelDeleted;
+                    case "edited": return GitHubEvents.LabelEdited;
+                }
+
+                break;
+            case "merge_group":
+                switch (action)
+                {
+                    case "checks_requested": return GitHubEvents.MergeGroupChecksRequested;
+                    case "destroyed": return GitHubEvents.MergeGroupDestroyed;
+                }
+
+                break;
+            case "milesone":
+                switch (action)
+                {
+                    case "closed": return GitHubEvents.MilestoneClosed;
+                    case "created": return GitHubEvents.MilestoneCreated;
+                    case "deleted": return GitHubEvents.MilestoneDeleted;
+                    case "edited": return GitHubEvents.MilestoneEdited;
+                    case "opened": return GitHubEvents.MilestoneOpened;
+                }
+
+                break;
+            case "package":
+                switch (action)
+                {
+                    case "published": return GitHubEvents.PackagePublished;
+                }
+
+                break;
+            case "page_build":
+                // TODO
+                break;
+            case "ping":
+                if (action == null && payload.ContainsKey("hook")) { return GitHubEvents.WebhookPing; }
+
+                break;
+            case "public":
+                // TODO
                 break;
             case "pull_request":
                 switch (action)
                 {
                     case "assigned": return GitHubEvents.PullRequestAssigned;
+                    case "auto_merge_disable": return GitHubEvents.PullRequestAutoMergeDisable;
                     case "auto_merge_disabled": return GitHubEvents.PullRequestAutoMergeDisabled;
                     case "auto_merge_enabled": return GitHubEvents.PullRequestAutoMergeEnabled;
                     case "closed": return GitHubEvents.PullRequestClosed;
+                    case "converted_to_draft": return GitHubEvents.PullRequestConvertedToDraft;
+                    case "demilestoned": return GitHubEvents.PullRequestDemilestoned;
                     case "dequeued": return GitHubEvents.PullRequestDequeued;
                     case "edited": return GitHubEvents.PullRequestEdited;
                     case "enqueued": return GitHubEvents.PullRequestEnqueued;
                     case "labeled": return GitHubEvents.PullRequestLabeled;
+                    case "locked": return GitHubEvents.PullRequestLocked;
+                    case "milestoned": return GitHubEvents.PullRequestMilestoned;
                     case "opened": return GitHubEvents.PullRequestOpened;
                     case "ready_for_review": return GitHubEvents.PullRequestReadyForReview;
+                    case "reopened": return GitHubEvents.PullRequestReopened;
                     case "resolved": return GitHubEvents.PullRequestResolved;
+                    case "review_request_removed": return GitHubEvents.PullRequestReviewRequestRemoved;
                     case "review_requested": return GitHubEvents.PullRequestReviewRequested;
                     case "submitted": return GitHubEvents.PullRequestSubmitted;
                     case "synchronize": return GitHubEvents.PullRequestSynchronize;
+                    case "unassigned": return GitHubEvents.PullRequestUnassigned;
                     case "unlabeled": return GitHubEvents.PullRequestUnlabeled;
+                    case "unlocked": return GitHubEvents.PullRequestUnlocked;
                 }
 
                 break;
             case "pull_request_review":
                 switch (action)
                 {
+                    case "dismissed": return GitHubEvents.PullRequestReviewDismissed;
+                    case "edited": return GitHubEvents.PullRequestReviewEdited;
                     case "submitted": return GitHubEvents.PullRequestReviewSubmitted;
                 }
 
@@ -196,15 +257,49 @@ public static class GitHubWebhook
                 }
 
                 break;
+            case "pull_request_target":
+                // TODO
+                break;
+            case "push":
+                // TODO
+                break;
+            case "registry_package":
+                switch (action)
+                {
+                    case "published": return GitHubEvents.RegistryPackagePublished;
+                    case "updated": return GitHubEvents.RegistryPackageUpdated;
+                }
+
+                break;
             case "release":
                 switch (action)
                 {
                     case "created": return GitHubEvents.ReleaseCreated;
+                    case "deleted": return GitHubEvents.ReleaseDeleted;
                     case "edited": return GitHubEvents.ReleaseEdited;
+                    case "prereleased": return GitHubEvents.ReleasePrereleased;
                     case "published": return GitHubEvents.ReleasePublished;
                     case "released": return GitHubEvents.ReleaseReleased;
+                    case "unpublished": return GitHubEvents.ReleaseUnpublished;
                 }
 
+                break;
+            case "repository_dispatch":
+                // TODO
+                break;
+            case "schedule":
+                // TODO
+                break;
+            case "star":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.StarredAtCreated;
+                    case "deleted": return GitHubEvents.StarredAtDeleted;
+                }
+
+                break;
+            case "status":
+                // TODO
                 break;
             case "sub_issues":
                 switch (action)
@@ -214,9 +309,30 @@ public static class GitHubWebhook
                 }
 
                 break;
+            case "watch":
+                switch (action)
+                {
+                    case "started": return GitHubEvents.WatchStarted;
+                }
+
+                break;
+            case "workflow_call":
+                return GitHubEvents.WorkflowCallEvent;
+
+            case "workflow_dispatch":
+                return GitHubEvents.WorkflowDispatchEvent;
+
+            case "workflow_run":
+                switch (action)
+                {
+                    case "completed": return GitHubEvents.WorkflowRunCompleted;
+                    case "in_progress": return GitHubEvents.WorkflowRunInProgress;
+                    case "requested": return GitHubEvents.WorkflowRunRequested;
+                }
+
+                break;
         }
 
-        // Fallback to old parsing logic
-        return GitHubWebhookLegacy.GetEventType(action, payload, log);
+        return GitHubEvents.Unknown;
     }
 }
