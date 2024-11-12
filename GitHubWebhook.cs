@@ -18,7 +18,7 @@ public static class GitHubWebhook
         string eventPayloadAsJson, Dictionary<string, StringValues> httpHeaders, ILogger? log = null)
     {
         string gitHubEventName = httpHeaders.TryGetValue(GitHubHeaderName, out StringValues header) ? header.ToString() : string.Empty;
-        return ParseEvent(gitHubEventName, eventPayloadAsJson, log);
+        return ParseEvent(eventPayloadAsJson, gitHubEventName, log);
     }
 
     /// <summary>
