@@ -19,20 +19,21 @@ GitHubWebhookPayload ghData = JsonSerializer.Deserialize<GitHubWebhookPayload>(j
 # Detecting the event type
 
 ```csharp
+string eventName = req.Headers.TryGetValue("X-GitHub-Event", out var header) ? (string)header : string.Empty;
 string json = "...request payload...";
 
 // Using GitHubEvents Enum
-GitHubEvents ghEventType = GitHubWebhook.GetEventType(json);
+GitHubEvents ghEventType = GitHubWebhook.GetEventType(json, eventName);
 ```
 
 # Deserialize to event class
 
 ```csharp
 string json = "...request payload...";
-
 GitHubWebhookPayload data = JsonSerializer.Deserialize<GitHubWebhookPayload>(json);
 
-GitHubEvents ghEventType = GitHubWebhook.GetEventType(json);
+string eventName = req.Headers.TryGetValue("X-GitHub-Event", out var header) ? (string)header : string.Empty;
+GitHubEvents ghEventType = GitHubWebhook.GetEventType(json, eventName);
 
 if (ghEventType == GitHubEvents.IssueOpened)
 {

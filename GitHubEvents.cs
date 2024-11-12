@@ -144,6 +144,11 @@ public enum GitHubEvents
 
     WatchStarted,
 
+    WorkflowJobCompleted,
+    WorkflowJobInProgress,
+    WorkflowJobQueued,
+    WorkflowJobWaiting,
+
     WorkflowRunCompleted,
     WorkflowRunInProgress,
     WorkflowRunRequested,
@@ -157,11 +162,4 @@ public enum GitHubEvents
     WebhookPingEvent,
     WorkflowCallEvent,
     WorkflowDispatchEvent,
-
-    // WorkflowJobCompleted,
-    // WorkflowJobInProgress,
-    // WorkflowJobQueued,
-    // WorkflowJobWaiting,
-
-    // RepoSettingsEdited,
 }

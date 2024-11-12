@@ -6,37 +6,59 @@ namespace Noware.GitHub.Webhooks.Models;
 
 public static class GitHubWebhook
 {
+    public const string GitHubHeaderName = "X-GitHub-Event";
+
     /// <summary>
     /// Given a GitHub webhook HTTP request, it returns the GitHub event type and payload
     /// </summary>
-    /// <param name="requestBody">HTTP body</param>
-    /// <param name="reqHeaders">HTTP headers</param>
+    /// <param name="eventPayloadAsJson">HTTP body</param>
+    /// <param name="httpHeaders">HTTP headers (use HttpRequest.Headers.ToDictionary())</param>
     /// <param name="log">App logger</param>
     public static (GitHubWebhookPayload? eventPayload, GitHubEvents eventType) ParseEvent(
-        string requestBody, Dictionary<string, StringValues> reqHeaders, ILogger log)
+        string eventPayloadAsJson, Dictionary<string, StringValues> httpHeaders, ILogger? log = null)
     {
-        string gitHubEventName = reqHeaders.TryGetValue("X-GitHub-Event", out StringValues header) ? header.ToString() : string.Empty;
-        log.LogInformation("X-GitHub-Event = {0}", gitHubEventName);
+        string gitHubEventName = httpHeaders.TryGetValue(GitHubHeaderName, out StringValues header) ? header.ToString() : string.Empty;
+        return ParseEvent(gitHubEventName, eventPayloadAsJson, log);
+    }
+
+    /// <summary>
+    /// Given a GitHub webhook HTTP request, it returns the GitHub event type and payload
+    /// </summary>
+    /// <param name="eventPayloadAsJson">GitHub webhook HTTP body</param>
+    /// <param name="eventName">GitHub event name</param>
+    /// <param name="log">App logger</param>
+    public static (GitHubWebhookPayload? eventPayload, GitHubEvents eventType) ParseEvent(
+        string eventPayloadAsJson, string eventName, ILogger? log = null)
+    {
+        log?.LogInformation("X-GitHub-Event = {0}", eventName);
 
         // Deserialize body
-        var data = JsonSerializer.Deserialize<GitHubWebhookPayload>(requestBody);
+        var data = JsonSerializer.Deserialize<GitHubWebhookPayload>(eventPayloadAsJson);
         if (data is null)
         {
-            log.LogError("Deserialized payload to {0} failed and returned NULL", nameof(GitHubWebhookPayload));
+            log?.LogError("Deserialized payload to {0} failed and returned NULL", nameof(GitHubWebhookPayload));
             return (null, GitHubEvents.Unknown);
         }
 
-        GitHubEvents eventType = GetEventType(gitHubEventName, requestBody, log);
+        GitHubEvents eventType = GetEventType(eventPayloadAsJson, eventName, log);
 
         return (data, eventType);
     }
 
-    public static GitHubEvents GetEventType(string eventName, string eventPayloadAsJson, ILogger log)
+    /// <summary>
+    /// Given a GitHub webhook HTTP request, it returns the GitHub event type
+    /// </summary>
+    /// <param name="eventPayloadAsJson">HTTP request body</param>
+    /// <param name="eventName">GitHub event name</param>
+    /// <param name="log">App logger</param>
+    /// <returns>Event type</returns>
+    public static GitHubEvents GetEventType(
+        string eventPayloadAsJson, string eventName, ILogger? log = null)
     {
         Dictionary<string, JsonElement>? payload = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(eventPayloadAsJson);
         if (payload == null)
         {
-            log.LogError("Deserialized payload to {0} failed and returned NULL", nameof(Dictionary<string, JsonElement>));
+            log?.LogError("Deserialized payload to {0} failed and returned NULL", nameof(Dictionary<string, JsonElement>));
             return GitHubEvents.Unknown;
         }
 
@@ -44,7 +66,7 @@ public static class GitHubWebhook
         if (payload.TryGetValue("action", out JsonElement jaction))
         {
             action = jaction.GetString();
-            log.LogInformation("Action = {0}", action);
+            log?.LogInformation("Action = {0}", action);
         }
 
         switch (eventName)
@@ -360,6 +382,17 @@ public static class GitHubWebhook
 
             case "workflow_dispatch":
                 return GitHubEvents.WorkflowDispatchEvent;
+
+            case "workflow_job":
+                switch (action)
+                {
+                    case "completed": return GitHubEvents.WorkflowJobCompleted;
+                    case "in_progress": return GitHubEvents.WorkflowJobInProgress;
+                    case "queued": return GitHubEvents.WorkflowJobQueued;
+                    case "waiting": return GitHubEvents.WorkflowJobWaiting;
+                }
+
+                break;
 
             case "workflow_run":
                 switch (action)
