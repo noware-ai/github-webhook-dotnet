@@ -29,6 +29,10 @@ public enum GitHubEvents
     DependabotAlertReintroduced,
     DependabotAlertReopened,
 
+    DeploymentCreated,
+
+    DeploymentStatusCreated,
+
     DiscussionCategoryChanged,
     DiscussionAnswered,
     DiscussionClosed,
@@ -145,8 +149,11 @@ public enum GitHubEvents
     WorkflowRunRequested,
 
     // Events without action
-    RepositoryForkEvent,
-    RepositoryVisibilityChangedToPublic,
+    CreateEvent,
+    DeleteEvent,
+    ForkEvent,
+    PushEvent,
+    RepositoryVisibilityChangedToPublicEvent,
     WebhookPingEvent,
     WorkflowCallEvent,
     WorkflowDispatchEvent,

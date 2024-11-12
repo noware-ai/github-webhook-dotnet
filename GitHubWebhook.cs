@@ -54,6 +54,7 @@ public static class GitHubWebhook
                 {
                     case "created": return GitHubEvents.BranchProtectionRuleCreated;
                 }
+
                 break;
             case "check_run":
                 switch (action)
@@ -86,11 +87,9 @@ public static class GitHubWebhook
 
                 break;
             case "create":
-                // TODO
-                break;
+                return GitHubEvents.CreateEvent;
             case "delete":
-                // TODO
-                break;
+                return GitHubEvents.DeleteEvent;
             case "dependabot_alert":
                 switch (action)
                 {
@@ -105,10 +104,18 @@ public static class GitHubWebhook
 
                 break;
             case "deployment":
-                // TODO
+                switch (action)
+                {
+                    case "created": return GitHubEvents.DeploymentCreated;
+                }
+
                 break;
             case "deployment_status":
-                // TODO
+                switch (action)
+                {
+                    case "created": return GitHubEvents.DeploymentStatusCreated;
+                }
+
                 break;
             case "discussion":
                 switch (action)
@@ -140,7 +147,7 @@ public static class GitHubWebhook
 
                 break;
             case "fork":
-                return GitHubEvents.RepositoryForkEvent;
+                return GitHubEvents.ForkEvent;
 
             case "gollum":
                 // TODO
@@ -234,7 +241,7 @@ public static class GitHubWebhook
             case "ping":
                 return GitHubEvents.WebhookPingEvent;
             case "public":
-                return GitHubEvents.RepositoryVisibilityChangedToPublic;
+                return GitHubEvents.RepositoryVisibilityChangedToPublicEvent;
             case "pull_request":
                 switch (action)
                 {
@@ -294,8 +301,7 @@ public static class GitHubWebhook
                 // TODO
                 break;
             case "push":
-                // TODO
-                break;
+                return GitHubEvents.PushEvent;
             case "registry_package":
                 switch (action)
                 {
