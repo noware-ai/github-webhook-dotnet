@@ -4,7 +4,12 @@ public enum GitHubEvents
 {
     Unknown = -1,
 
+    BranchProtectionConfigurationEnabled,
+    BranchProtectionConfigurationDisabled,
+
     BranchProtectionRuleCreated,
+    BranchProtectionRuleDeleted,
+    BranchProtectionRuleEdited,
 
     CheckRunCompleted,
     CheckRunCreated,
@@ -78,6 +83,13 @@ public enum GitHubEvents
     LabelDeleted,
     LabelEdited,
 
+    MemberAdded,
+    MemberEdited,
+    MemberRemoved,
+
+    MembershipAdded,
+    MembershipRemoved,
+
     MergeGroupChecksRequested,
     MergeGroupDestroyed,
 
@@ -86,6 +98,15 @@ public enum GitHubEvents
     MilestoneDeleted,
     MilestoneEdited,
     MilestoneOpened,
+
+    OrgBlockBlocked,
+    OrgBlockUnblocked,
+
+    OrganizationDeleted,
+    OrganizationMemberAdded,
+    OrganizationMemberInvited,
+    OrganizationMemberRemoved,
+    OrganizationRenamed,
 
     PackagePublished,
     PackageUpdated,
@@ -120,6 +141,7 @@ public enum GitHubEvents
     PullRequestCommentEdited,
 
     PullRequestThreadResolved,
+    PullRequestThreadUnresolved,
 
     PullRequestReviewDismissed,
     PullRequestReviewEdited,
@@ -135,6 +157,21 @@ public enum GitHubEvents
     ReleasePublished,
     ReleaseReleased,
     ReleaseUnpublished,
+
+    RepositoryVulnerabilityAlertCreate,
+    RepositoryVulnerabilityAlertDismiss,
+    RepositoryVulnerabilityAlertReopen,
+    RepositoryVulnerabilityAlertResolve,
+
+    SecretScanningAlertCreated,
+    SecretScanningAlertPubliclyLeaked,
+    SecretScanningAlertReopened,
+    SecretScanningAlertResolved,
+    SecretScanningAlertValidated,
+
+    SecurityAdvisoryPublished,
+    SecurityAdvisoryUpdated,
+    SecurityAdvisoryWithdrawn,
 
     StarredAtCreated,
     StarredAtDeleted,
@@ -157,8 +194,11 @@ public enum GitHubEvents
     CreateEvent,
     DeleteEvent,
     ForkEvent,
+    PageBuildEvent,
     PushEvent,
     RepositoryVisibilityChangedToPublicEvent,
+    SecretScanningAlertLocationEvent,
+    SecurityAndAnalysisEvent,
     WebhookPingEvent,
     WorkflowCallEvent,
     WorkflowDispatchEvent,

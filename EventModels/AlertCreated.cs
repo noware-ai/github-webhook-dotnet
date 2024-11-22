@@ -1,8 +1,8 @@
-﻿using Noware.GitHub.Webhooks.Models.DataModels;
+using Noware.GitHub.Webhooks.Models.DataModels;
 
 namespace Noware.GitHub.Webhooks.Models.EventModels;
 
-public class AlertFixed
+public class AlertCreated
 {
     public GitHubAlert Alert { get; set; } = new();
     public GitHubEnterprise Enterprise { get; set; } = new();
@@ -13,9 +13,9 @@ public class AlertFixed
 
 public static partial class GitHubWebhookPayloadExtensions
 {
-    public static AlertFixed AsAlertFixed(this GitHubWebhookPayload data)
+    public static AlertCreated AsAlertCreated(this GitHubWebhookPayload data)
     {
-        return new AlertFixed
+        return new AlertCreated
         {
             Alert = data.Alert ?? new GitHubAlert(),
             Enterprise = data.Enterprise ?? new GitHubEnterprise(),

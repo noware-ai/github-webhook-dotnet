@@ -71,10 +71,20 @@ public static class GitHubWebhook
 
         switch (eventName)
         {
+            case "branch_protection_configuration":
+                switch (action)
+                {
+                    case "enabled": return GitHubEvents.BranchProtectionConfigurationEnabled;
+                    case "disabled": return GitHubEvents.BranchProtectionConfigurationDisabled;
+                }
+
+                break;
             case "branch_protection_rule":
                 switch (action)
                 {
                     case "created": return GitHubEvents.BranchProtectionRuleCreated;
+                    case "deleted": return GitHubEvents.BranchProtectionRuleDeleted;
+                    case "edited": return GitHubEvents.BranchProtectionRuleEdited;
                 }
 
                 break;
@@ -227,6 +237,23 @@ public static class GitHubWebhook
             case "marketplace_purchase":
                 // TODO
                 break;
+            case "member":
+                switch (action)
+                {
+                    case "added": return GitHubEvents.MemberAdded;
+                    case "edited": return GitHubEvents.MemberEdited;
+                    case "removed": return GitHubEvents.MemberRemoved;
+                }
+
+                break;
+            case "membership":
+                switch (action)
+                {
+                    case "added": return GitHubEvents.MembershipAdded;
+                    case "removed": return GitHubEvents.MembershipRemoved;
+                }
+
+                break;
             case "merge_group":
                 switch (action)
                 {
@@ -238,7 +265,7 @@ public static class GitHubWebhook
             case "meta":
                 // TODO
                 break;
-            case "milesone":
+            case "milestone":
                 switch (action)
                 {
                     case "closed": return GitHubEvents.MilestoneClosed;
@@ -246,6 +273,25 @@ public static class GitHubWebhook
                     case "deleted": return GitHubEvents.MilestoneDeleted;
                     case "edited": return GitHubEvents.MilestoneEdited;
                     case "opened": return GitHubEvents.MilestoneOpened;
+                }
+
+                break;
+            case "org_block":
+                switch (action)
+                {
+                    case "blocked": return GitHubEvents.OrgBlockBlocked;
+                    case "unblocked": return GitHubEvents.OrgBlockUnblocked;
+                }
+
+                break;
+            case "organization":
+                switch (action)
+                {
+                    case "deleted": return GitHubEvents.OrganizationDeleted;
+                    case "member_added": return GitHubEvents.OrganizationMemberAdded;
+                    case "member_invited": return GitHubEvents.OrganizationMemberInvited;
+                    case "member_removed": return GitHubEvents.OrganizationMemberRemoved;
+                    case "renamed": return GitHubEvents.OrganizationRenamed;
                 }
 
                 break;
@@ -258,10 +304,24 @@ public static class GitHubWebhook
 
                 break;
             case "page_build":
-                // TODO
-                break;
+                return GitHubEvents.PageBuildEvent;
             case "ping":
                 return GitHubEvents.WebhookPingEvent;
+            case "project":
+                // TODO
+                break;
+            case "project_column":
+                // TODO
+                break;
+            case "projects_v2":
+                // TODO
+                break;
+            case "projects_v2_item":
+                // TODO
+                break;
+            case "projects_v2_status_update":
+                // TODO
+                break;
             case "public":
                 return GitHubEvents.RepositoryVisibilityChangedToPublicEvent;
             case "pull_request":
@@ -316,6 +376,7 @@ public static class GitHubWebhook
                 switch (action)
                 {
                     case "resolved": return GitHubEvents.PullRequestThreadResolved;
+                    case "unresolved": return GitHubEvents.PullRequestThreadUnresolved;
                 }
 
                 break;
@@ -348,9 +409,43 @@ public static class GitHubWebhook
             case "repository_dispatch":
                 // TODO
                 break;
+            case "repository_vulnerability_alert":
+                switch (action)
+                {
+                    case "create": return GitHubEvents.RepositoryVulnerabilityAlertCreate;
+                    case "dismiss": return GitHubEvents.RepositoryVulnerabilityAlertDismiss;
+                    case "reopen": return GitHubEvents.RepositoryVulnerabilityAlertReopen;
+                    case "resolve": return GitHubEvents.RepositoryVulnerabilityAlertResolve;
+                }
+
+                break;
             case "schedule":
                 // TODO
                 break;
+            case "secret_scanning_alert":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.SecretScanningAlertCreated;
+                    case "publicly_leaked": return GitHubEvents.SecretScanningAlertPubliclyLeaked;
+                    case "reopened": return GitHubEvents.SecretScanningAlertReopened;
+                    case "resolved": return GitHubEvents.SecretScanningAlertResolved;
+                    case "validated": return GitHubEvents.SecretScanningAlertValidated;
+                }
+
+                break;
+            case "secret_scanning_alert_location":
+                return GitHubEvents.SecretScanningAlertLocationEvent;
+            case "security_advisory":
+                switch (action)
+                {
+                    case "published": return GitHubEvents.SecurityAdvisoryPublished;
+                    case "updated": return GitHubEvents.SecurityAdvisoryUpdated;
+                    case "withdrawn": return GitHubEvents.SecurityAdvisoryWithdrawn;
+                }
+
+                break;
+            case "security_and_analysis":
+                return GitHubEvents.SecurityAndAnalysisEvent;
             case "star":
                 switch (action)
                 {
