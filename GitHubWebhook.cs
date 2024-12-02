@@ -118,6 +118,13 @@ public static class GitHubWebhook
                 }
 
                 break;
+            case "commit_comment":
+                switch (action)
+                {
+                    case "created": return GitHubEvents.CommitCommentCreated;
+                }
+
+                break;
             case "create":
                 return GitHubEvents.CreateEvent;
             case "delete":
@@ -465,6 +472,20 @@ public static class GitHubWebhook
                 }
 
                 break;
+            case "team":
+                switch (action)
+                {
+                    case "added_to_repository": return GitHubEvents.TeamAddedToRepository;
+                    case "created": return GitHubEvents.TeamCreated;
+                    case "deleted": return GitHubEvents.TeamDeleted;
+                    case "edited": return GitHubEvents.TeamEdited;
+                    case "removed_from_repository": return GitHubEvents.TeamRemovedToRepository;
+                }
+
+                break;
+            case "team_add":
+                return GitHubEvents.TeamAddEvent;
+
             case "watch":
                 switch (action)
                 {

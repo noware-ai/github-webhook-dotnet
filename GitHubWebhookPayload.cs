@@ -46,6 +46,7 @@ public class GitHubWebhookPayload
     [JsonPropertyName("starred_at")] public DateTimeOffset? StarredAt { get; set; } = null;
     [JsonPropertyName("sub_issue")] public GitHubIssue? SubIssue { get; set; } = null;
     [JsonPropertyName("sub_issue_id")] public long SubIssueId { get; set; }
+    [JsonPropertyName("team")] public GitHubTeam? Team { get; set; } = null;
     [JsonPropertyName("thread")] public GitHubThread? Thread { get; set; } = null;
     [JsonPropertyName("type")] public GitHubType? Type { get; set; } = null;
     [JsonPropertyName("workflow")] public GitHubWorkflow? Workflow { get; set; } = null;

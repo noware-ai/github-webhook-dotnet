@@ -26,6 +26,8 @@ public enum GitHubEvents
     CodeScanningAlertReopenedByUser,
     CodeScanningAlertResolve,
 
+    CommitCommentCreated,
+
     DependabotAlertAutoDismissed,
     DependabotAlertAutoReopened,
     DependabotAlertCreated,
@@ -178,6 +180,14 @@ public enum GitHubEvents
 
     SubIssuesParentIssueAdded,
     SubIssuesSubIssueAdded,
+
+    TeamAddedToRepository,
+    TeamCreated,
+    TeamDeleted,
+    TeamEdited,
+    TeamRemovedToRepository,
+
+    TeamAddEvent,
 
     WatchStarted,
 
